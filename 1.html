@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Christmas is coming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #B4DDFF;
+      font-family: 'Luxurious Roman', cursive;
+      width: 1728px;
+      height: 7000px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      padding-top: 300px;
+      color: white;
+    }
+
+    h1, #days, #hours, #minutes, #seconds {
+      font-size: 6rem;
+      color: white;
+      animation: glowBreath 2.5s ease-in-out infinite;
+    }
+
+    @keyframes glowBreath {
+      0% {
+        text-shadow: 0 0 5px #ffef7b, 0 0 10px #ffef7b;
+      }
+      50% {
+        text-shadow: 0 0 30px #ffef7b, 0 0 60px #ffef7b;
+      }
+      100% {
+        text-shadow: 0 0 5px #ffef7b, 0 0 10px #ffef7b;
+      }
+    }
+
+    .countdown {
+      font-size: 5rem;
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      flex-wrap: wrap;
+    }
+
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .unit span {
+      font-size: 3rem;
+      margin-top: 1rem;
+    }
+
+    .flake {
+      position: absolute;
+      color: white;
+      pointer-events: none;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(11000px);
+        opacity: 1;
+      }
+    }
+
+    .back-link {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      font-size: 3rem;
+      color: white;
+      text-decoration: none;
+      animation: glowBreath 2.5s ease-in-out infinite;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #ffef7b;
+    }
+
+    .music-button {
+      position: absolute;
+      top: 50px;
+      right: 50px;
+      font-size: 2rem;
+      padding: 10px 20px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffef7b, 0 0 20px #ffef7b;
+      font-family: 'Luxurious Roman', cursive;
+    }
+
+    .music-button:hover {
+      background-color: #fff8b3;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">← Poem</a>
+
+  <button class="music-button" onclick="document.getElementById('bg-music').play()">▶ Play</button>
+
+  <audio id="bg-music" loop>
+    <source src="SpotiDownloader.com - It's Beginning to Look a Lot like Christmas - Michael Bublé.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  <div class="container">
+    <h1>Christmas is coming</h1>
+    <div class="countdown" id="countdown">
+      <div class="unit">
+        <div id="days">0</div>
+        <span>Days</span>
+      </div>
+      <div class="unit">
+        <div id="hours">0</div>
+        <span>Hours</span>
+      </div>
+      <div class="unit">
+        <div id="minutes">0</div>
+        <span>Minutes</span>
+      </div>
+      <div class="unit">
+        <div id="seconds">0</div>
+        <span>Seconds</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const letters = ['S', 'N', 'O', 'W'];
+
+    function createFlake() {
+      const flake = document.createElement('div');
+      flake.className = 'flake';
+      flake.innerText = letters[Math.floor(Math.random() * letters.length)];
+
+      flake.style.left = Math.random() * 1728 + 'px';
+      flake.style.fontSize = (Math.random() * 3 + 1.5) + 'rem';
+      flake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      flake.style.top = '-50px';
+
+      document.body.appendChild(flake);
+      flake.addEventListener('animationend', () => flake.remove());
+    }
+
+    setInterval(createFlake, 150);
+  </script>
+  <script>
+    const countdownDate = new Date("December 25, 2025 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
